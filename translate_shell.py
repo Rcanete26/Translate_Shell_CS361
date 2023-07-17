@@ -11,15 +11,16 @@ intro = 'This program is a script that allows you to to easily translate through
 warning = "Please be careful when using this project! Longer prompts of text will take longer to translate so please be patient. Please do not send anything over 15k charaters or the program might fail or cause instability. Due to some of the packages this program uses this only works on mac currently.\n"
 more_info_app = "This program was made using two packages! Simple Term Menu allows this program to have a selectable menu from the command line. GoogleTras is the package that allows this program to provide the translations! This app is not associated with google.\n "
 instructions = " Use the up and down arrow keys to navigate through the menu and enter to select.\n"
+line_break = "----------------"
 
 def main():
     Running = True
     destination_language = 'en'
     last_translation = "There have been no translations yet!"
     print(intro)
-    print("----------------")
+    print(line_break)
     print(warning)
-    print('----------------')
+    print(line_break)
     print(instructions)
     while Running == True:
         main_options = ['Translate', 'More Info','Show Last Translation', 'Change Destination Language','Quit']
@@ -40,7 +41,7 @@ def main():
             print(last_translation)
         
         elif main_options[menu_entry] == 'More Info':
-            print('-----------')
+            print(line_break)
             print("More Info! \n")
             print(more_info_app)
 
