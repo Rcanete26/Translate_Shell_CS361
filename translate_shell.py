@@ -2,12 +2,20 @@
 import googletrans
 from googletrans import Translator
 from simple_term_menu import TerminalMenu
+import socket
+
+HOST = "127.0.0.1"  # The server's hostname or IP address
+PORT = 2259 # The port used by the server
+
+RandomSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+RandomSocket.connect((HOST, PORT))
+print(f"connected to:  {HOST}  Port:  {PORT}")
 
 # Needed Packages:
 # pip install googletrans==4.0.0rc1
 # python3 -m pip install simple-term-menu
 supported_languages = googletrans.LANGUAGES
-intro = 'This program is a script that allows you to to easily translate through your shell! The input should be auto detected and will translate to english by default. Select Change Destination Language if you would like to translate to a different langauge! \n'
+intro = 'Hello! \n This program is a script that allows you to to easily translate through your shell! The input should be auto detected and will translate to english by default. Select Change Destination Language if you would like to translate to a different langauge! \n'
 warning = "Please be careful when using this project! Longer prompts of text will take longer to translate so please be patient. Please do not send anything over 15k charaters or the program might fail or cause instability. Due to some of the packages this program uses this only works on mac currently.\n"
 more_info_app = "This program was made using two packages! Simple Term Menu allows this program to have a selectable menu from the command line. GoogleTras is the package that allows this program to provide the translations! This app is not associated with google.\n "
 instructions = " Use the up and down arrow keys to navigate through the menu and enter to select.\n"
@@ -17,6 +25,7 @@ def main():
     Running = True
     destination_language = 'en'
     last_translation = "There have been no translations yet!"
+    print(line_break)
     print(intro)
     print(line_break)
     print(warning)
@@ -38,7 +47,7 @@ def main():
             last_translation = translation_part(destination_language)
 
         elif main_options[menu_entry] == 'Show Last Translation':
-            print(last_translation)
+            print(get_random_quote())
         
         elif main_options[menu_entry] == 'More Info':
             print(line_break)
@@ -59,6 +68,14 @@ def translation_part(destion_lang):
             print(translation.text)
             return (f"{source_text} = ({destion_lang})-{translation.text}")
 
+def get_random_quote():
+    quote = b'quote'
+    RandomSocket.sendall(quote)
+    print('message sent:', quote.decode())
+    data = RandomSocket.recv(1024).decode("utf-8")
+    print(f"Received {data!r}")
+    return data
+
 if __name__ == '__main__':
     main()
 
@@ -67,4 +84,3 @@ if __name__ == '__main__':
 
 # translation = translator.translate(source)
 
-# print(translation.text)
