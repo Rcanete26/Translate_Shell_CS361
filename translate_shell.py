@@ -3,6 +3,7 @@ import googletrans
 from googletrans import Translator
 from simple_term_menu import TerminalMenu
 import socket
+import random
 
 HOST = "127.0.0.1"  # The server's hostname or IP address
 PORT = 2259 # The port used by the server
@@ -32,7 +33,7 @@ def main():
     print(line_break)
     print(instructions)
     while Running == True:
-        main_options = ['Translate', 'More Info','Show Last Translation', 'Change Destination Language','Quit']
+        main_options = ['Translate', 'More Info','Show Last Translation', 'Change Destination Language','See a random translation!','Quit']
         main_menu = TerminalMenu(main_options)
         menu_entry = main_menu.show()
         if main_options[menu_entry] == "Quit":
@@ -44,15 +45,25 @@ def main():
             destination_language = new_language
 
         elif main_options[menu_entry] == 'Translate':
-            last_translation = translation_part(destination_language)
+            translation_array = translation_part(destination_language)
+            last_translation = translation_array[0]
 
         elif main_options[menu_entry] == 'Show Last Translation':
-            print(get_random_quote())
+            print(last_translation)
         
         elif main_options[menu_entry] == 'More Info':
             print(line_break)
             print("More Info! \n")
             print(more_info_app)
+        
+        elif main_options[menu_entry] == 'See a random translation!':
+            quote = get_random_quote()
+            random_language = random.choice(list(supported_languages.values()))
+            translator = Translator()
+            quote_translation = translator.translate(quote, random_language)
+            print(f"{quote} = ({random_language})-{quote_translation.text}")
+
+
 
 def change_language(current_language):
     for languages in supported_languages:
@@ -62,18 +73,21 @@ def change_language(current_language):
     return str(new_language)
 
 def translation_part(destion_lang):
+            return_array = []
             translator = Translator()
             source_text = input("What would you like the translate?: ")
             translation = translator.translate(source_text, destion_lang)
             print(translation.text)
-            return (f"{source_text} = ({destion_lang})-{translation.text}")
+            return_array.append(f"{source_text} = ({destion_lang})-{translation.text}")
+            return_array.append(translation) 
+            return (return_array)
 
 def get_random_quote():
     quote = b'quote'
     RandomSocket.sendall(quote)
     print('message sent:', quote.decode())
     data = RandomSocket.recv(1024).decode("utf-8")
-    print(f"Received {data!r}")
+    # print(f"Received {data!r}")
     return data
 
 if __name__ == '__main__':
