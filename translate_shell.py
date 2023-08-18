@@ -16,9 +16,19 @@ print(f"connected to:  {HOST}  Port:  {PORT}")
 # pip install googletrans==4.0.0rc1
 # python3 -m pip install simple-term-menu
 supported_languages = googletrans.LANGUAGES
-intro = 'Hello! \n This program is a script that allows you to to easily translate through your shell! The input should be auto detected and will translate to english by default. Select Change Destination Language if you would like to translate to a different langauge! \n'
-warning = "Please be careful when using this project! Longer prompts of text will take longer to translate so please be patient. Please do not send anything over 15k charaters or the program might fail or cause instability. Due to some of the packages this program uses this only works on mac currently.\n"
-more_info_app = "This program was made using two packages! Simple Term Menu allows this program to have a selectable menu from the command line. GoogleTras is the package that allows this program to provide the translations! This app is not associated with google.\n "
+intro = """Hello! \n This program is a script that allows you to to easily translate through
+your shell! The input should be auto detected and will translate to english by default. 
+Select Change Destination Language if you would like to translate to a different langauge! \n"""
+
+warning = """Please be careful when using this project! 
+Longer prompts of text will take longer to translate so please be patient. 
+Please do not send anything over 15k charaters or the program might fail or cause instability. 
+Due to some of the packages this program uses this only works on mac currently.\n"""
+
+more_info_app = """This program was made using two packages! Simple Term 
+Menu allows this program to have a selectable menu from the command line. GoogleTras is the 
+package that allows this program to provide the translations! This app is not associated 
+with google.\n """
 instructions = " Use the up and down arrow keys to navigate through the menu and enter to select.\n"
 line_break = "----------------"
 
@@ -33,7 +43,8 @@ def main():
     print(line_break)
     print(instructions)
     while Running == True:
-        main_options = ['Translate', 'More Info','Show Last Translation', 'Change Destination Language','See a random translation!','Quit']
+        main_options = (['Translate', 'More Info','Show Last Translation', 
+        'Change Destination Language','See a random translation!','Quit'])
         main_menu = TerminalMenu(main_options)
         menu_entry = main_menu.show()
         if main_options[menu_entry] == "Quit":
@@ -92,9 +103,4 @@ def get_random_quote():
 
 if __name__ == '__main__':
     main()
-
-# translator = Translator()
-# source = 'すみません'
-
-# translation = translator.translate(source)
 
