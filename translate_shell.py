@@ -77,6 +77,8 @@ def main():
 
 
 def change_language(current_language):
+    """Show the supported languages and allow the user to change
+    which language the course is translated to."""
     for languages in supported_languages:
         print(f"Code:{languages}, {supported_languages[languages]}")
     print(f'The current destination language is: {current_language}')
@@ -84,6 +86,8 @@ def change_language(current_language):
     return str(new_language)
 
 def translation_part(destion_lang):
+            """Translate the source code to the destination language and
+            """
             return_array = []
             translator = Translator()
             source_text = input("What would you like the translate?: ")
@@ -94,6 +98,7 @@ def translation_part(destion_lang):
             return (return_array)
 
 def get_random_quote():
+    """Will get a random quote from the microservice"""
     quote = b'quote'
     RandomSocket.sendall(quote)
     print('message sent:', quote.decode())
